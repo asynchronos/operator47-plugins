@@ -1,0 +1,15 @@
+{
+  "name": "operator47-plugins",
+  "description": "Claude Code plugins by operator47 — context optimization and workflow automation",
+  "owner": {
+    "name": "operator47"
+  },
+  "plugins": [
+    {
+      "name": "plugin-lazy",
+      "source": "./plugins/plugin-lazy",
+      "description": "Lazy-load disabled plugins on demand. Lists installed-but-disabled plugins, reads skills-only plugins from cache mid-session (no restart), or toggles agent-heavy plugins on/off (restart required).",
+      "category": "workflow"
+    }
+  ]
+}

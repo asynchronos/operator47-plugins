@@ -1,0 +1,5 @@
+.venv/
+.claude/
+notes/
+.DS_Store
+Thumbs.db

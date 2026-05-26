@@ -1,0 +1,53 @@
+# operator47-plugins
+
+Claude Code plugin marketplace by operator47. Context optimization and workflow automation plugins.
+
+## Plugins
+
+| Plugin | Category | Description |
+|--------|----------|-------------|
+| **plugin-lazy** | workflow | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them. |
+
+## Install
+
+In a Claude Code CLI session:
+
+```
+/plugin marketplace add https://github.com/asynchronos/operator47-plugins.git
+/plugin install plugin-lazy@operator47-plugins
+```
+
+Verify with `/plugin list`.
+
+## plugin-lazy
+
+Manages your Claude Code plugin context budget. Instead of loading every plugin at session start, disable the ones you don't use often and lazy-load them on demand.
+
+**What it does:**
+
+- **`lazy setup`** — guided wizard that classifies your plugins as always-on vs lazy-loadable, then disables the ones you pick
+- **`lazy load <plugin>`** — reads a skills-only plugin from cache and runs it inline, without enabling it
+- **`lazy enable <plugin>`** — enables an agent-heavy plugin (requires session restart)
+- **`lazy disable <plugin>`** — disables a plugin so it stops consuming context
+
+**How it works:** Skills-only plugins are read directly from the plugin cache and executed inline — no settings change, no restart. Agent-heavy plugins require toggling `enabledPlugins` in settings.json and a session restart because the Agent dispatcher only loads agents at startup.
+
+**Context cost:** ~130 tokens when enabled (just the skill description in the frontmatter). The full 184-line procedure loads only when invoked.
+
+## Update
+
+```
+/plugin update plugin-lazy
+```
+
+## Local development
+
+1. Clone this repo.
+2. Edit files under `plugins/<plugin>/`.
+3. Bump `version` in `plugins/<plugin>/.claude-plugin/plugin.json` (semver).
+4. Commit and push.
+5. On each machine: `/plugin update <plugin>`.
+
+## License
+
+MIT

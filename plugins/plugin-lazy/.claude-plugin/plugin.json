@@ -1,0 +1,17 @@
+{
+  "name": "plugin-lazy",
+  "displayName": "Plugin Lazy Loader",
+  "version": "1.0.0",
+  "description": "Lazy-load disabled plugins on demand. Lists installed-but-disabled plugins, reads skills-only plugins from cache mid-session (no restart), or toggles agent-heavy plugins on/off (restart required).",
+  "author": {
+    "name": "operator47",
+    "url": "https://github.com/asynchronos"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/asynchronos/operator47-plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asynchronos/operator47-plugins.git"
+  },
+  "keywords": ["plugin", "lazy-load", "context", "on-demand", "workflow"]
+}
