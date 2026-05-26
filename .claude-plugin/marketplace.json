@@ -10,6 +10,12 @@
       "source": "./plugins/plugin-lazy",
       "description": "Lazy-load disabled plugins on demand. Lists installed-but-disabled plugins, reads skills-only plugins from cache mid-session (no restart), or toggles agent-heavy plugins on/off (restart required).",
       "category": "workflow"
+    },
+    {
+      "name": "session-review",
+      "source": "./plugins/session-review",
+      "description": "Review what's open, pending, or stale in the current chat session before closing or continuing. Project-agnostic; surface-only — never edits any file.",
+      "category": "workflow"
     }
   ]
 }

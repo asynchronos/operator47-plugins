@@ -7,6 +7,7 @@ Claude Code plugin marketplace by operator47. Context optimization and workflow 
 | Plugin | Category | Description |
 |--------|----------|-------------|
 | **plugin-lazy** | workflow | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them. |
+| **session-review** | workflow | Review what's open, pending, or stale in the current chat session before closing or continuing. Surface-only — never edits any file. |
 
 ## Install
 
@@ -15,6 +16,7 @@ In a Claude Code CLI session:
 ```
 /plugin marketplace add https://github.com/asynchronos/operator47-plugins.git
 /plugin install plugin-lazy@operator47-plugins
+/plugin install session-review@operator47-plugins
 ```
 
 Verify with `/plugin list`.
@@ -34,10 +36,21 @@ Manages your Claude Code plugin context budget. Instead of loading every plugin 
 
 **Context cost:** ~130 tokens when enabled (just the skill description in the frontmatter). The full 184-line procedure loads only when invoked.
 
+## session-review
+
+Takes stock of your current Claude Code session before you close or switch context. Produces a six-section report covering what's done, in-flight, deferred, and at risk of being lost.
+
+**Sections:** Done This Session, In-Flight, Open Offers, Deferred, State Drift, Suggested Next — each with persistence tags (`[in-git]`, `[in-TODO]`, `[in-log]`, `[chat-only]`) so you can see at a glance what would survive closing the session.
+
+**How to use:** Type `/session-review` or say "review the session", "what's open", "checkpoint before closing".
+
+**Context cost:** ~80 tokens when enabled (just the skill description). The full procedure loads only when invoked.
+
 ## Update
 
 ```
 /plugin update plugin-lazy
+/plugin update session-review
 ```
 
 ## Local development

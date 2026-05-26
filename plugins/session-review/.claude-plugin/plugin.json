@@ -1,0 +1,17 @@
+{
+  "name": "session-review",
+  "displayName": "Session Review",
+  "version": "0.2.1",
+  "description": "Review what's open, pending, or stale in the current chat session before closing or continuing. Project-agnostic; surface-only — never edits any file.",
+  "author": {
+    "name": "operator47",
+    "url": "https://github.com/asynchronos"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/asynchronos/operator47-plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asynchronos/operator47-plugins.git"
+  },
+  "keywords": ["session", "review", "checkpoint", "wrap-up", "status", "open-tasks", "todo"]
+}
