@@ -17,6 +17,34 @@ Re-derive current rules from Anthropic plugin-development public docs via WebFet
 
 - YAML `description:` in SKILL.md — never put unquoted `: ` inside the value. The skill silently disappears from the loader.
 
+## Development workflow
+
+### Branches
+
+- `main` — always releasable, single long-lived branch
+- Feature branches: `<plugin>/<description>`, `fix/<description>`, `docs/<description>`, `new/<plugin>`
+- Squash merge only — PR title becomes the commit message
+
+### CI validation
+
+Every PR and push to main runs `.github/scripts/validate.sh` + gitleaks secret scan.
+
+What CI checks:
+1. All `plugin.json` — valid JSON, required fields (name, version, description, author), semver, dir name matches name field
+2. `marketplace.json` — valid JSON, source paths exist, bidirectional sync with plugin dirs
+3. `SKILL.md` — YAML frontmatter has `name:` and `description:`, warns on unquoted `: `
+4. Every plugin dir has at least one skill or agent
+
+### Local validation
+
+```bash
+bash .github/scripts/validate.sh
+```
+
+### Release process
+
+Tag with `<plugin>-v<version>` (e.g. `plugin-lazy-v1.0.0`). Version in tag must match `plugin.json`.
+
 ## Cache refresh
 
 After plugin edits, users must run `/plugin update operator47-plugins` for installed instances to pick up changes.
