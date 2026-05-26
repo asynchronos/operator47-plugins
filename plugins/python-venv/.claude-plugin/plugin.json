@@ -1,0 +1,17 @@
+{
+  "name": "python-venv",
+  "displayName": "Python Virtual Environment Setup",
+  "version": "0.1.1",
+  "description": "Set up a Python virtual environment in the current project. Prefers uv, falls back to stdlib python -m venv. Handles requirements.txt, pyproject.toml, and .gitignore automatically.",
+  "author": {
+    "name": "operator47",
+    "url": "https://github.com/asynchronos"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/asynchronos/operator47-plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asynchronos/operator47-plugins.git"
+  },
+  "keywords": ["python", "venv", "virtualenv", "uv", "development"]
+}

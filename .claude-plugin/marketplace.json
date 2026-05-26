@@ -16,6 +16,12 @@
       "source": "./plugins/session-review",
       "description": "Review what's open, pending, or stale in the current chat session before closing or continuing. Project-agnostic; surface-only — never edits any file.",
       "category": "workflow"
+    },
+    {
+      "name": "python-venv",
+      "source": "./plugins/python-venv",
+      "description": "Set up a Python virtual environment in the current project. Prefers uv, falls back to stdlib python -m venv. Handles requirements.txt, pyproject.toml, and .gitignore automatically.",
+      "category": "development"
     }
   ]
 }
