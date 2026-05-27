@@ -25,8 +25,9 @@ The skill produces a structured report with **numbered improvement proposals**, 
 
 - **Reads**: project files, git history, logs, `.learning-cycle/` contents
 - **Delegates**: evidence gathering to `Agent(general-purpose)` — writes evidence to `.learning-cycle/cycles/`
-- **Writes (on consent only)**: `.learning-cycle/` files (config, memory, notes), accepted proposal edits, CLAUDE.md annotation
-- **Never** writes without explicit user acceptance via `AskUserQuestion`
+- **Writes to `.learning-cycle/`** after bootstrap consent (evidence, action notes, memory updates each cycle)
+- **Writes to project files** only on explicit proposal acceptance via `AskUserQuestion`
+- **CLAUDE.md annotation** on first bootstrap (with consent)
 
 ### Self-contained folder
 
@@ -126,6 +127,8 @@ The Agent prompt must include:
 - Cap quotes at 1–3 lines each with citations (`file:line`, commit hash, log timestamp)
 - For **session** subject: include the conversation brief from Step 2 as the primary evidence source
 - Output path: `.learning-cycle/cycles/<YYYY-MM-DD>-<ID>/evidence.md`
+
+Cycle ID is a zero-padded sequential number (`001`, `002`, ...) based on existing folders for that date. Scan `.learning-cycle/cycles/` for `<YYYY-MM-DD>-*` to determine the next ID.
 
 The agent writes evidence to disk using this template:
 
