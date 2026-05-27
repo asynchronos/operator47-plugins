@@ -5,7 +5,7 @@
 | | Dev repo (agent) | Public repo (skill) |
 |---|---|---|
 | Plugin type | Agent (`agents/learner.md`) | Skill (`skills/learning-cycle/SKILL.md`) |
-| Execution | Subagent with `memory: local` | Inline skill + `Agent(Explore)` delegation |
+| Execution | Subagent with `memory: local` | Inline skill + `Agent(general-purpose)` delegation |
 | Memory | Opaque `.claude/agent-memory-local/` | Transparent `.learning-cycle/` folder at project root |
 | Model | Pinned to Opus via `model: opus` | Session model (user controls) |
 | Version | 0.2.2 | 1.0.0 (clean break) |
@@ -18,10 +18,10 @@ The agent-to-skill conversion is a new architecture, not an evolution. The skill
 
 ### Agent → Skill (Hybrid B)
 
-The skill runs inline for interaction (AskUserQuestion, output formatting, propose-accept flow) but delegates evidence gathering to an `Agent(Explore)` subagent for isolated, read-only heavy lifting.
+The skill runs inline for interaction (AskUserQuestion, output formatting, propose-accept flow) but delegates evidence gathering to an `Agent(general-purpose)` subagent that writes `evidence.md` to the cycle folder.
 
 - Steps 1-2 (load config, identify subject): inline — sees conversation context
-- Step 3 (gather evidence): delegated to `Agent(Explore)` — isolated, fast
+- Step 3 (gather evidence): delegated to `Agent(general-purpose)` — writes `.learning-cycle/cycles/<date>-<id>/evidence.md`
 - Steps 4-8 (action note, patterns, proposals, apply, memory): inline — direct output to user
 
 ### `memory: local` → `.learning-cycle/` Folder
