@@ -73,7 +73,7 @@ LC_DIR="$ROOT/.learning-cycle"
   .learning-cycle/
     config.md      # empty skeleton with section headers
     memory.md      # empty with header
-    notes/         # empty directory
+    cycles/        # empty directory
   ```
 
 - Then append a registration block to `CLAUDE.md` (create if absent) so all future sessions — including other plugins and agents — know the folder exists:
