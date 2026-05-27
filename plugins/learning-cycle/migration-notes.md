@@ -51,7 +51,7 @@ The agent-based plugin required `enabledPlugins` toggle + session restart. The s
 **What got worse:**
 - No Opus guarantee (session model may be Sonnet)
 - No free-form mid-cycle conversation (structured AskUserQuestion gates)
-- Evidence comes back as summary from Explore agent (some detail loss)
+- Evidence written by general-purpose agent (quality depends on prompt construction)
 
 **What stayed the same:**
 - Core Kolb cycle (CE → RO → AC → AE)
@@ -73,4 +73,4 @@ The agent-based plugin required `enabledPlugins` toggle + session restart. The s
 
 ## Downgrade Path (Hybrid B → C)
 
-At release time, if Agent delegation in Step 3 is deemed not worth the complexity, replace the `Agent(Explore)` spawn with inline `Read`/`Grep`/`Bash` commands. All other steps unchanged. This is a content-only diff in SKILL.md.
+At release time, if Agent delegation in Step 3 is deemed not worth the complexity, replace the `Agent(general-purpose)` spawn with inline `Read`/`Grep`/`Bash` commands that write `evidence.md` directly. All other steps unchanged. This is a content-only diff in SKILL.md.
