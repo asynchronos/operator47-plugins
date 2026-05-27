@@ -45,6 +45,8 @@ bash .github/scripts/validate.sh
 
 Tag with `<plugin>-v<version>` (e.g. `plugin-lazy-v1.0.0`). Version in tag must match `plugin.json`.
 
+Pushing a tag triggers `.github/workflows/release.yml` which validates the tag, checks version match, runs `validate.sh`, and creates a GitHub Release with auto-generated notes.
+
 ## Cache refresh
 
 After plugin edits, users must run `/plugin update operator47-plugins` for installed instances to pick up changes.
