@@ -1,0 +1,78 @@
+name: Release plugin
+
+on:
+  push:
+    tags:
+      - '*-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse tag
+        id: tag
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          SEMVER_RE='^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?(\+[a-zA-Z0-9.]+)?$'
+
+          if [[ "$TAG" =~ ^(.+)-v([0-9]+\..+)$ ]]; then
+              PLUGIN_NAME="${BASH_REMATCH[1]}"
+              TAG_VERSION="${BASH_REMATCH[2]}"
+          else
+              echo "::error::Tag '$TAG' does not match pattern <plugin>-v<semver>"
+              exit 1
+          fi
+
+          if ! [[ "$TAG_VERSION" =~ $SEMVER_RE ]]; then
+              echo "::error::Version '$TAG_VERSION' is not valid semver"
+              exit 1
+          fi
+
+          echo "plugin=$PLUGIN_NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$TAG_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Plugin: $PLUGIN_NAME"
+          echo "Version: $TAG_VERSION"
+
+      - name: Validate plugin exists
+        run: |
+          PLUGIN_DIR="plugins/${{ steps.tag.outputs.plugin }}"
+          if [ ! -d "$PLUGIN_DIR" ]; then
+              echo "::error::Plugin directory '$PLUGIN_DIR' does not exist"
+              exit 1
+          fi
+          if [ ! -f "$PLUGIN_DIR/.claude-plugin/plugin.json" ]; then
+              echo "::error::Plugin manifest not found at '$PLUGIN_DIR/.claude-plugin/plugin.json'"
+              exit 1
+          fi
+
+      - name: Verify tag version matches plugin.json
+        run: |
+          PLUGIN_JSON="plugins/${{ steps.tag.outputs.plugin }}/.claude-plugin/plugin.json"
+          JSON_VERSION="$(jq -r '.version' "$PLUGIN_JSON")"
+          TAG_VERSION="${{ steps.tag.outputs.version }}"
+
+          if [ "$JSON_VERSION" != "$TAG_VERSION" ]; then
+              echo "::error::Version mismatch — tag has v${TAG_VERSION} but plugin.json has ${JSON_VERSION}"
+              exit 1
+          fi
+          echo "Version match confirmed: $TAG_VERSION"
+
+      - name: Run validation
+        run: bash .github/scripts/validate.sh
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            --title "${{ steps.tag.outputs.plugin }} v${{ steps.tag.outputs.version }}" \
+            --generate-notes \
+            --verify-tag
