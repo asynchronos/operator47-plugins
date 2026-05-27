@@ -1,0 +1,17 @@
+{
+  "name": "learning-cycle",
+  "displayName": "Learning Cycle",
+  "version": "1.0.0",
+  "description": "Kolb experiential-learning cycle skill. Observes any subject (pipeline run, chat session, logs, git history, transactions) and distills patterns into numbered improvement proposals. Proposals are options — applied only on explicit user consent. File-based memory persists across cycles.",
+  "author": {
+    "name": "operator47",
+    "url": "https://github.com/asynchronos"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/asynchronos/operator47-plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asynchronos/operator47-plugins.git"
+  },
+  "keywords": ["learning", "kolb", "reflection", "patterns", "proposals", "workflow", "retrospective"]
+}

@@ -22,6 +22,12 @@
       "source": "./plugins/python-venv",
       "description": "Set up a Python virtual environment in the current project. Prefers uv, falls back to stdlib python -m venv. Handles requirements.txt, pyproject.toml, and .gitignore automatically.",
       "category": "development"
+    },
+    {
+      "name": "learning-cycle",
+      "source": "./plugins/learning-cycle",
+      "description": "Kolb experiential-learning cycle skill. Observes any subject and distills patterns into numbered improvement proposals. Applied only on explicit consent. File-based memory persists across cycles.",
+      "category": "workflow"
     }
   ]
 }
