@@ -9,9 +9,6 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/asynchronos/operator47-plugins",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/asynchronos/operator47-plugins.git"
-  },
+  "repository": "https://github.com/asynchronos/operator47-plugins",
   "keywords": ["plugin", "lazy-load", "context", "on-demand", "workflow"]
 }
