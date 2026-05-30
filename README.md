@@ -6,7 +6,7 @@ Claude Code plugin marketplace by operator47. Context optimization and workflow 
 
 | Plugin | Category | Description |
 |--------|----------|-------------|
-| **plugin-lazy** | workflow | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them. |
+| **plugin-lazy** | Optimization | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them. |
 | **session-review** | workflow | Review what's open, pending, or stale in the current chat session before closing or continuing. Surface-only — never edits any file. |
 | **python-venv** | development | Set up a Python virtual environment (.venv) in the current project. Prefers uv, falls back to stdlib `python -m venv`. Handles requirements.txt, pyproject.toml, and .gitignore. |
 
