@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# Target repo root. Defaults to this script's repo (../..); an explicit first
+# arg lets the test harness point validation at a throwaway fixture repo.
+REPO_ROOT="${1:-$(cd "$(dirname "$0")/../.." && pwd)}"
 
 if ! command -v jq &>/dev/null; then
     echo "ERROR: jq is required but not found. Install: apt install jq (Linux), brew install jq (macOS), or winget install jqlang.jq (Windows)" >&2
@@ -11,8 +13,8 @@ fi
 ERRORS=0
 WARNINGS=0
 
-err()  { echo "ERROR: $*" >&2; ((ERRORS++)); }
-warn() { echo "WARN:  $*" >&2; ((WARNINGS++)); }
+err()  { echo "ERROR: $*" >&2; ERRORS=$((ERRORS + 1)); }
+warn() { echo "WARN:  $*" >&2; WARNINGS=$((WARNINGS + 1)); }
 info() { echo "INFO:  $*"; }
 
 SEMVER_RE='^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?(\+[a-zA-Z0-9.]+)?$'
@@ -79,7 +81,10 @@ else
     if ! jq empty "$MARKETPLACE" 2>/dev/null; then
         err "marketplace.json is not valid JSON"
     else
-        mp_sources="$(jq -r '.plugins[].source' "$MARKETPLACE")"
+        # tr -d '\r': strip CR so a CRLF checkout (autocrlf=true on Windows,
+        # where jq may emit \r\n) doesn't corrupt the parsed source paths.
+        # No-op on LF input, so Linux CI behavior is unchanged.
+        mp_sources="$(jq -r '.plugins[].source' "$MARKETPLACE" | tr -d '\r')"
 
         while IFS= read -r src; do
             [ -z "$src" ] && continue
@@ -89,7 +94,7 @@ else
             fi
         done <<< "$mp_sources"
 
-        mp_names="$(jq -r '.plugins[].name' "$MARKETPLACE" | sort)"
+        mp_names="$(jq -r '.plugins[].name' "$MARKETPLACE" | tr -d '\r' | sort)"
 
         dir_names=""
         for pdir in "${PLUGIN_DIRS[@]}"; do
