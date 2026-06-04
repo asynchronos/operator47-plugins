@@ -1,0 +1,5 @@
+# Shell scripts must stay LF on every platform so they run correctly under
+# bash. A CRLF checkout (e.g. core.autocrlf=true on Windows) can break
+# heredocs and, on some shells, the `#!` shebang line. This is independent of
+# each contributor's autocrlf setting.
+*.sh text eol=lf
