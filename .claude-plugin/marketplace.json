@@ -22,6 +22,12 @@
       "source": "./plugins/python-venv",
       "description": "Set up a Python virtual environment in the current project. Prefers uv, falls back to stdlib python -m venv. Handles requirements.txt, pyproject.toml, and .gitignore automatically.",
       "category": "development"
+    },
+    {
+      "name": "notebooklm",
+      "source": "./plugins/notebooklm",
+      "description": "Turn local Markdown/text/CSV into an AI report + infographic and grounded Q&A via Google NotebookLM. Unofficial notebooklm-py — use a throwaway Google account.",
+      "category": "content"
     }
   ]
 }

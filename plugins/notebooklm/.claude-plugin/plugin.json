@@ -1,0 +1,14 @@
+{
+  "name": "notebooklm",
+  "displayName": "NotebookLM Report Generator",
+  "version": "0.1.0",
+  "description": "Turn local Markdown/text/CSV into an AI report (Markdown) + infographic (PNG) and grounded Q&A via Google NotebookLM, using the unofficial notebooklm-py library. Project-agnostic.",
+  "author": {
+    "name": "operator47",
+    "url": "https://github.com/asynchronos"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/asynchronos/operator47-plugins",
+  "repository": "https://github.com/asynchronos/operator47-plugins",
+  "keywords": ["notebooklm", "report", "infographic", "summarization", "research", "data-visualization"]
+}

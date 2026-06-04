@@ -1,0 +1,15 @@
+# Dependency for the NotebookLM skill scripts (nlm.py).
+# notebooklm-py is UNOFFICIAL -- it drives Google NotebookLM's private internal
+# API. Use a THROWAWAY Google account and keep usage light. See references/legal.md.
+#
+#   py -m pip install -r requirements.txt     # Windows
+#   pip install -r requirements.txt           # macOS/Linux
+#   notebooklm login                          # one-time, throwaway Google account
+#   notebooklm auth check --test --json        # expect {"status": "ok"}
+#
+# data_adapter.py is stdlib-only and needs nothing here.
+#
+# Pinned to the 0.5/0.6 line this skill was verified against. nlm.py is written
+# to tolerate both (0.5.x sync from_storage + top-level enums; 0.6.x async
+# from_storage + notebooklm.rpc enums). [browser] pulls Playwright for `login`.
+notebooklm-py[browser]>=0.5.0,<0.7.0
