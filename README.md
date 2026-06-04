@@ -9,6 +9,7 @@ Claude Code plugin marketplace by operator47. Context optimization and workflow 
 | **plugin-lazy** | Optimization | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them — and auto-inject a session-start index so disabled plugins stay discoverable. |
 | **session-review** | workflow | Review what's open, pending, or stale in the current chat session before closing or continuing. Surface-only — never edits any file. |
 | **python-venv** | development | Set up a Python virtual environment (.venv) in the current project. Prefers uv, falls back to stdlib `python -m venv`. Handles requirements.txt, pyproject.toml, and .gitignore. |
+| **notebooklm** | content | Turn local Markdown/text/CSV into an AI report + infographic and grounded Q&A via Google NotebookLM. Unofficial `notebooklm-py` — use a throwaway Google account. |
 
 ## Install
 
@@ -19,6 +20,7 @@ In a Claude Code CLI session:
 /plugin install plugin-lazy@operator47-plugins
 /plugin install session-review@operator47-plugins
 /plugin install python-venv@operator47-plugins
+/plugin install notebooklm@operator47-plugins
 ```
 
 Verify with `/plugin list`.
@@ -66,6 +68,23 @@ Scaffolds a Python virtual environment in the current working directory, install
 
 **Context cost:** ~80 tokens when enabled (just the skill description). The full 197-line procedure loads only when invoked.
 
+## notebooklm
+
+Generate an AI **report** (Markdown) and **infographic** (PNG) — plus grounded Q&A — from your local docs or data, via Google NotebookLM. Project-agnostic: sources are plain text/Markdown, so it works for a docs set, a research dump, or a dataset exported to a Markdown table.
+
+**What it does:**
+
+- **`nlm.py run`** — add sources from files/dirs/text, then generate a report + infographic into `./notebooklm-output/`
+- **`nlm.py add` / `generate` / `chat`** — add sources, generate from an existing notebook, or ask grounded questions
+- **`data_adapter.py`** — bridge CSV / DB rows → a Markdown table (NotebookLM rejects raw CSV), plus a NEW/GONE/Δ diff table
+- Documents (but does not wire in) NotebookLM's other artifacts — audio overview, video, quiz, flashcards, mind map, slide deck, data table — in `references/capabilities.md`
+
+**How to use:** Say "turn these docs into a NotebookLM report", "make an infographic from this data", or run the CLI under `${CLAUDE_PLUGIN_ROOT}/skills/notebooklm/scripts/`. One-time setup: install `scripts/requirements.txt`, `notebooklm login`, then `notebooklm auth check --test --json`.
+
+**⚠️ Unofficial:** `notebooklm-py` drives NotebookLM's private internal API (against Google ToS). Use a throwaway Google account, keep usage light, and send only non-sensitive content — see the skill's `references/legal.md`.
+
+**Context cost:** ~110 tokens when enabled (just the skill description). The full procedure and references load only when invoked.
+
 ## Init-once plugins and plugin-lazy
 
 Some plugins are "init-once" — you invoke them to scaffold something, and then they have no reason to stay loaded. Keeping them enabled wastes context tokens on every subsequent turn. **plugin-lazy** solves this.
@@ -96,6 +115,7 @@ lazy load python-venv    # loads the skill from cache, scaffolds the venv, exits
 /plugin update plugin-lazy
 /plugin update session-review
 /plugin update python-venv
+/plugin update notebooklm
 ```
 
 ## Local development
