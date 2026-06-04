@@ -6,7 +6,7 @@ Claude Code plugin marketplace by operator47. Context optimization and workflow 
 
 | Plugin | Category | Description |
 |--------|----------|-------------|
-| **plugin-lazy** | Optimization | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them. |
+| **plugin-lazy** | Optimization | Lazy-load disabled plugins on demand. Reduce context window usage by keeping plugins disabled until you need them — and auto-inject a session-start index so disabled plugins stay discoverable. |
 | **session-review** | workflow | Review what's open, pending, or stale in the current chat session before closing or continuing. Surface-only — never edits any file. |
 | **python-venv** | development | Set up a Python virtual environment (.venv) in the current project. Prefers uv, falls back to stdlib `python -m venv`. Handles requirements.txt, pyproject.toml, and .gitignore. |
 
@@ -33,8 +33,9 @@ Manages your Claude Code plugin context budget. Instead of loading every plugin 
 - **`lazy load <plugin>`** — reads a skills-only plugin from cache and runs it inline, without enabling it
 - **`lazy enable <plugin>`** — enables an agent-heavy plugin (requires session restart)
 - **`lazy disable <plugin>`** — disables a plugin so it stops consuming context
+- **Session-start index** (new in 1.1.0) — a SessionStart hook auto-injects a compact index of your installed-but-disabled plugins, so they stay discoverable without staying loaded
 
-**How it works:** Skills-only plugins are read directly from the plugin cache and executed inline — no settings change, no restart. Agent-heavy plugins require toggling `enabledPlugins` in settings.json and a session restart because the Agent dispatcher only loads agents at startup.
+**How it works:** Skills-only plugins are read directly from the plugin cache and executed inline — no settings change, no restart. Agent-heavy plugins require toggling `enabledPlugins` in settings.json and a session restart because the Agent dispatcher only loads agents at startup. The session-start index is a hook that lists disabled plugins at the top of each session so you remember what you can `lazy load`.
 
 **Context cost:** ~130 tokens when enabled (just the skill description in the frontmatter). The full 184-line procedure loads only when invoked.
 
