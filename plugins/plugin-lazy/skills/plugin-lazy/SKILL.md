@@ -87,6 +87,21 @@ For agent-heavy plugins, add: "Re-enabling requires a session restart for agents
 
 ---
 
+## Auto-index (SessionStart hook)
+
+This plugin ships a `SessionStart` hook (`hooks/disabled_skills_index.py`, registered in `hooks/hooks.json`) that runs automatically while plugin-lazy is enabled — at session start, resume, clear, and after auto-compaction.
+
+It reads the plugin registry and injects a compact, auto-generated index of every **disabled** plugin (one short "use-when" line each, ~50 tokens regardless of the plugin's real size), grouped by route:
+
+- **skills-only** → lazy-load inline (Step 4), no restart
+- **agent-heavy** → enable + restart (Step 5)
+
+Effect: the model can **semantically** recognise a request that matches a disabled plugin and route into it, even though that plugin's full skill/agent definitions are not in context. This is what lets a request like "create a python venv" reach the disabled `python-venv` skill without the user typing `lazy load` first — and it is why expensive plugins can be kept **disabled but discoverable** instead of uninstalled.
+
+The index is auto-derived from the live registry, so it always reflects the current disabled set with no manual maintenance. The hook fails open (emits nothing on any error) and never blocks a session. It provides **visibility only** — execution still goes through Step 4 / Step 5, and disabled plugins stay disabled (no settings change).
+
+---
+
 ## Setup Mode
 
 Guided post-install flow. Walks the user through all enabled plugins and helps them decide which to keep always-on vs lazy-load on demand. Invoke with `lazy setup`.
@@ -107,18 +122,21 @@ To estimate **Context cost**: count skill descriptions (~50-100 tokens each) + a
 
 To determine **Type**: check for `agents/` subdirectory in the install path.
 
-### Setup Step 2 — Classify each plugin
+### Setup Step 2 — Classify each plugin (cost × frequency)
 
-For each enabled plugin, present a recommendation:
-
-- **Always-on** — plugins used in most sessions (e.g., plugin-lazy itself)
-- **Lazy-loadable** — setup-once plugins or project-specific plugins not needed every session
+Recommend **always-on** vs **disabled (on-demand)** based on **context cost × how
+often it is used** — not on whether it is a "setup" tool.
 
 Heuristic:
 - Plugin is plugin-lazy itself → **always-on** (it's the loader)
-- Plugin has agents → **lazy-loadable** (high context cost, project-specific)
-- Plugin has a single skill with setup/init purpose → **lazy-loadable**
-- Plugin is used every session → **always-on**
+- **Agent-heavy** (has `agents/`) → **keep DISABLED** (high cost, ~500-700 tokens/agent). The SessionStart auto-index keeps it discoverable; `lazy enable` + restart only when actually needed.
+- **Skills-only, used in most sessions** → **always-on** (a skill description is cheap, ~50-380 tokens, and native auto-invoke is more reliable than any lazy nudge)
+- **Skills-only, used occasionally** (init / setup / on-demand tools) → **keep DISABLED**; the auto-index surfaces it and it lazy-loads inline (no restart) when a request matches
+
+Rule of thumb: enable only when a standing description cost is worth paying every
+session for how often you use it; otherwise keep it disabled and let the auto-index
+make it discoverable. **Prefer disable over delete** — a disabled plugin still
+costs only ~one index line; an uninstalled one loses the capability entirely.
 
 Present as suggestion, not decision. The user picks.
 
