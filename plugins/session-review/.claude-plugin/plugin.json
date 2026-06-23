@@ -1,8 +1,8 @@
 {
   "name": "session-review",
   "displayName": "Session Review",
-  "version": "0.2.2",
-  "description": "Review what's open, pending, or stale in the current chat session before closing or continuing. Project-agnostic; surface-only — never edits any file.",
+  "version": "0.3.0",
+  "description": "Review what's open, pending, or at risk in the current session. Default: report only. With --handoff: show a draft and confirm before writing .claude/handoff.md in the project.",
   "author": {
     "name": "operator47",
     "url": "https://github.com/asynchronos"
