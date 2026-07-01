@@ -1,0 +1,14 @@
+{
+  "name": "llm-kms",
+  "displayName": "LLM-KMS Wiki Compiler",
+  "version": "0.1.0",
+  "description": "Zettelkasten-style knowledge management for AI agents. Bootstraps an atomic-note wiki in any repo and routes ingest/query/lint/prune operations; bundles the llm-kms-mcp tools for scaffolding.",
+  "author": {
+    "name": "operator47",
+    "url": "https://github.com/asynchronos"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/asynchronos/operator47-plugins",
+  "repository": "https://github.com/asynchronos/operator47-plugins",
+  "keywords": ["knowledge-management", "zettelkasten", "wiki", "mcp", "notes"]
+}

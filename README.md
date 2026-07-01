@@ -10,6 +10,7 @@ Claude Code plugin marketplace by operator47. Context optimization and workflow 
 | **session-review** | workflow | Review what's open, pending, or stale in the current chat session before closing or continuing. Surface-only — never edits any file. |
 | **python-venv** | development | Set up a Python virtual environment (.venv) in the current project. Prefers uv, falls back to stdlib `python -m venv`. Handles requirements.txt, pyproject.toml, and .gitignore. |
 | **notebooklm** | content | Turn local Markdown/text/CSV into an AI report + infographic and grounded Q&A via Google NotebookLM. Unofficial `notebooklm-py` — use a throwaway Google account. |
+| **llm-kms** | workflow | Zettelkasten-style knowledge management for AI agents. Bootstraps an atomic-note wiki and routes ingest/query/lint/prune; bundles llm-kms-mcp for scaffolding. |
 
 ## Install
 
@@ -21,6 +22,7 @@ In a Claude Code CLI session:
 /plugin install session-review@operator47-plugins
 /plugin install python-venv@operator47-plugins
 /plugin install notebooklm@operator47-plugins
+/plugin install llm-kms@operator47-plugins
 ```
 
 Verify with `/plugin list`.

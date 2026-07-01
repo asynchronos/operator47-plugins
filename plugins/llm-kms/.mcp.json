@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "llm-kms-tools": {
+      "command": "uvx",
+      "args": ["llm-kms-mcp"]
+    }
+  }
+}

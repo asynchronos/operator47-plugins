@@ -28,6 +28,12 @@
       "source": "./plugins/notebooklm",
       "description": "Turn local Markdown/text/CSV into an AI report + infographic and grounded Q&A via Google NotebookLM. Unofficial notebooklm-py — use a throwaway Google account.",
       "category": "content"
+    },
+    {
+      "name": "llm-kms",
+      "source": "./plugins/llm-kms",
+      "description": "Zettelkasten-style knowledge management for AI agents — bootstrap an atomic-note wiki and route ingest/query/lint/prune, with bundled scaffolding tools.",
+      "category": "workflow"
     }
   ]
 }
